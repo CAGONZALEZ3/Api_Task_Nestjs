@@ -1,6 +1,7 @@
-import { BeforeInsert, BeforeUpdate, Column, PrimaryGeneratedColumn } from "typeorm";
+import { BeforeInsert, BeforeUpdate, Column, Entity, PrimaryGeneratedColumn } from "typeorm";
 import {genSalt, hash, compare} from 'bcryptjs';
 
+@Entity()
 export class User {
     @PrimaryGeneratedColumn()
     id: number;
@@ -10,6 +11,9 @@ export class User {
 
     @Column({nullable:false})
     password: string;
+
+    @Column({nullable:true})
+    name?: string;
 
     @BeforeInsert()
     @BeforeUpdate()

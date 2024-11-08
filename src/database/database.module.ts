@@ -1,6 +1,8 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { User } from 'src/modules/user/entities/user.entity';
+import { Task } from 'src/modules/task/entities/task.entity';
 
 @Module({
     imports:[
@@ -15,8 +17,8 @@ import { ConfigModule, ConfigService } from '@nestjs/config';
               password: configService.get('DATABASE_PASSWORD'),
               database: configService.get('DATABASE_NAME'),
               autoLoadEntities: true,
-              entities: [__dirname + '/../**/*.entity{.ts,.js}'],
-              synchronize: true, // Solo en desarrollo, no en producción
+              entities: /* [User,Task], */ [__dirname + '/../**/*.entity{.ts,.js}'],
+              synchronize: false, // Solo en desarrollo, no en producción
             }),
           })
     ]
