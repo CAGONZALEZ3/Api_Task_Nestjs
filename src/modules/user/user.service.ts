@@ -1,4 +1,4 @@
-import { BadRequestException, ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { BadRequestException, ConflictException, Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { QueryFailedError, Repository } from 'typeorm';
@@ -33,7 +33,7 @@ export class UserService {
   }
 
   async findEmail(email: string){
-    const user = await this.userRepository.findOne({where: {email:email}});
+    const user = await this.userRepository.findOne({where: {email: email}});
 
     if (!user) {
       throw new NotFoundException(`Usuario con email ${email} no existe`);
@@ -83,5 +83,22 @@ export class UserService {
     }
     
     
+  }
+
+  async validateUser(email: string, password: string){
+    const user = await this.userRepository.findOne({where: {email},
+                                                    select: ['id', 'email', 'password'],
+                                                    })
+    if (!user) {
+      throw new NotFoundException('Not exists that email')
+    }
+
+    const isValidPassword = await user.comparePassword(password);
+    if (!isValidPassword) {
+      throw new UnauthorizedException('Invalid Credentials');
+    }
+
+    const { password: _, ...userWithoutPassword } = user;
+    return userWithoutPassword;
   }
 }

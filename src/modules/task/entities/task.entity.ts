@@ -1,10 +1,6 @@
-import {Column, CreateDateColumn, Entity, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
-
-export enum Status {
-    PENDING = 'pending',
-    IN_PROGRESS = 'in-progress',
-    COMPLETED = 'completed'
-};
+import { User } from "src/modules/user/entities/user.entity";
+import {Column, CreateDateColumn, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn, UpdateDateColumn} from "typeorm";
+import { Status } from "../enums/status.enum";
 
 @Entity()
 export class Task {
@@ -24,11 +20,16 @@ export class Task {
     })
     status: Status
 
-    
-
     @CreateDateColumn()
     createdAt: Date;
     
     @UpdateDateColumn()
     updateAt: Date;
+
+    @ManyToOne(() => User, user => user.tasks, { nullable: false, onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'userId' })
+    user: User;
+
+    @Column({nullable:false})
+    userId: number;
 }
