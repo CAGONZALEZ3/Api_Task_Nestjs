@@ -28,6 +28,9 @@ DATABASE_SYNC=true
 docker-compose build
 docker-compose up
 
+docker build -t api_task_nestjs .
+
+
 #para verificar que la network en la que esta la base de datos
 docker network ls
 
