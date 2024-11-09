@@ -11,6 +11,7 @@ $ npm install
 ```
 
 ## .env Example
+```bash
 API_KEY=PALABRASECRETAAPIKEY
 JWTSECRETE=PALABRASECRETAJWT
 PORT=3000
@@ -20,6 +21,7 @@ DATABASE_USER=root
 DATABASE_PASSWORD=root
 DATABASE_NAME=taskNest
 DATABASE_SYNC=true
+```
 
 ## Compile and run the project
 

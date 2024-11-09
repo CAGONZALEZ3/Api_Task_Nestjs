@@ -13,7 +13,7 @@ services:
       - ./mysql:/var/lib/mysql
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
     ports:
-      - "3307:3306"  # Mapea el puerto 3306 de MySQL al puerto 3307 de tu máquina
+      - "3306:3306"  # Mapea el puerto 3306 de MySQL al puerto 3307 de tu máquina
     networks:
       - app_network
       
