@@ -32,6 +32,17 @@
 $ npm install
 ```
 
+## .env Example
+API_KEY=PALABRASECRETAAPIKEY
+JWTSECRETE=PALABRASECRETAJWT
+PORT=3000
+DATABASE_HOST=localhost
+DATABASE_PORT=3306
+DATABASE_USER=root
+DATABASE_PASSWORD=root
+DATABASE_NAME=taskNest
+DATABASE_SYNC=true
+
 ## Compile and run the project
 
 ```bash

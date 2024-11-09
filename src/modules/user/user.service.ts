@@ -101,4 +101,10 @@ export class UserService {
     const { password: _, ...userWithoutPassword } = user;
     return userWithoutPassword;
   }
+
+  async validateUserById(id: number): Promise<boolean>{
+    //const user
+
+    return true
+  }
 }
