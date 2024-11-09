@@ -1,13 +1,11 @@
-import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
 import { CreateTaskDto } from './dto/create-task.dto';
 import { UpdateTaskDto } from './dto/update-task.dto';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Task } from './entities/task.entity';
 import { Repository } from 'typeorm';
-import { UserService } from '../user/user.service';
 import { Status } from './enums/status.enum';
 import { User } from '../user/entities/user.entity';
-import { forbidden } from 'joi';
 
 @Injectable()
 export class TaskService {
@@ -102,7 +100,7 @@ export class TaskService {
 
   compareUsers(user: number, userId: number) {
     if (user !== userId){
-      throw new ForbiddenException('El usuario no es el mismo');
+      throw new UnauthorizedException('El usuario no es el mismo');
     }
   }
 }

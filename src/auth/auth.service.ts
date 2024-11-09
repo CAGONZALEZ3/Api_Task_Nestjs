@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, UnauthorizedException } from '@nestjs/common';
+import { Injectable, UnauthorizedException } from '@nestjs/common';
 import {ConfigService} from '@nestjs/config';
 import { UserService } from 'src/modules/user/user.service';
 import { RegisterDto } from './dto/register.dto';
@@ -8,13 +8,14 @@ import { jwtConstants } from './constants/jwtConstants.secret';
 
 @Injectable()
 export class AuthService {
+
     private readonly apiKeyService;
 
-    constructor(private readonly configService: ConfigService,
+    constructor(configService: ConfigService,
                 private readonly userService : UserService,
                 private readonly jwtService : JwtService
     ) {
-        this.apiKeyService = configService.get('API_KEY')
+        this.apiKeyService = configService.get('API_KEY');
     }
 
     async register(registerDto : RegisterDto){

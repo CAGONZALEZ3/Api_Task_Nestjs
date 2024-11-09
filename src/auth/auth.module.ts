@@ -14,15 +14,15 @@ import { ApiKeyStrategy } from './strategy/api-key.strategy';
     JwtModule.register({
       global: true,
       secret: jwtConstants.secret,
-      signOptions: { expiresIn: '15m' },
+      signOptions: { expiresIn: '30m' },
     }),
   ],
-  providers: [AuthService, /* ApiKeyStrategy */],
+  providers: [AuthService, ApiKeyStrategy],
   controllers: [AuthController],
   exports:[AuthService],
 })
-export class AuthModule /* implements NestModule */ {
-  /* configure(consumer: MiddlewareConsumer) {
+export class AuthModule implements NestModule {
+  configure(consumer: MiddlewareConsumer) {
       consumer.apply(AuthMiddleware).forRoutes('*');
-  } */
+  }
 }

@@ -25,13 +25,8 @@ export class UserGuard implements CanActivate {
     const user =await this.authService.validatetoken(token);
     
     request.metadata = { userId: user.sub};
-    /* const userId = request.body?.userId ?? request.headers?.userId ?? request.params?.userId;
-    console.log(user.sub);
-    console.log(parseInt(userId));
-    if (user.sub !== parseInt(userId) && userId !== undefined) {
-      console.log('es diferente');
-      throw new UnauthorizedException('No se puede insertar a otros Usuarios');
-    } */
+    // const userId = request.body?.userId ?? request.headers?.userId ?? request.params?.userId;
+    
 
     return true;
   }
