@@ -1,4 +1,4 @@
-version: "3.8"
+version: '3.8'
 services:
   mysql:
     image: mysql:8.0
@@ -12,4 +12,32 @@ services:
     volumes:
       - ./mysql:/var/lib/mysql
     ports:
-      - "3307"
+      - "3307:3306"  # Mapea el puerto 3306 de MySQL al puerto 3307 de tu máquina
+
+  nestjs:
+    build: .
+    container_name: nestjs_app
+    restart: always
+    environment:
+      API_KEY: ${API_KEY}
+      JWTSECRET: ${JWTSECRET}
+      PORT: ${PORT}
+      DATABASE_HOST: mysql  # Aquí apuntas al servicio de mysql definido en docker-compose
+      DATABASE_PORT: 3306
+      DATABASE_USER: ${DATABASE_USER}
+      DATABASE_PASSWORD: ${DATABASE_PASSWORD}
+      DATABASE_NAME: ${DATABASE_NAME}
+      DATABASE_SYNC: ${DATABASE_SYNC}
+    volumes:
+      - .:/usr/src/app  # Monta el directorio de la aplicación en el contenedor
+      - ./mysql:/var/lib/mysql  # Monta el volumen de MySQL si es necesario
+    ports:
+      - "3000:3000"  # Mapea el puerto 3000 de tu app al puerto 3000 de la máquina
+    depends_on:
+      - mysql
+    networks:
+      - app_network
+
+networks:
+  app_network:
+    driver: bridge
