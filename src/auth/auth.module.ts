@@ -11,10 +11,14 @@ import { ApiKeyStrategy } from './strategy/api-key.strategy';
 
 @Module({
   imports: [PassportModule, ConfigModule, UserModule,
-    JwtModule.register({
-      global: true,
-      secret: jwtConstants.secret,
-      signOptions: { expiresIn: '30m' },
+    JwtModule.registerAsync({
+      imports: [],
+      inject: [ConfigService],
+      useFactory: async (configService: ConfigService) => ({
+        global: true,
+        secret: configService.get<string>('JWTSECRET'), // Aquí obtenemos el secret desde las variables de entorno
+        signOptions: { expiresIn: '30m' },
+      }),
     }),
   ],
   providers: [AuthService, ApiKeyStrategy],

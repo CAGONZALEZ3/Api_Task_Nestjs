@@ -10,12 +10,13 @@ import { jwtConstants } from './constants/jwtConstants.secret';
 export class AuthService {
 
     private readonly apiKeyService;
-
+    private readonly secretJwt;
     constructor(configService: ConfigService,
                 private readonly userService : UserService,
                 private readonly jwtService : JwtService
     ) {
         this.apiKeyService = configService.get('API_KEY');
+        this.secretJwt = configService.get('JWTSECRET');
     }
 
     async register(registerDto : RegisterDto){
@@ -40,7 +41,7 @@ export class AuthService {
             const payload = await this.jwtService.verifyAsync(
               token,
               {
-                secret: jwtConstants.secret
+                secret: this.secretJwt
               }
             )
 

@@ -1,30 +1,8 @@
-<p align="center">
-  <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="120" alt="Nest Logo" /></a>
-</p>
-
-[circleci-image]: https://img.shields.io/circleci/build/github/nestjs/nest/master?token=abc123def456
-[circleci-url]: https://circleci.com/gh/nestjs/nest
-
-  <p align="center">A progressive <a href="http://nodejs.org" target="_blank">Node.js</a> framework for building efficient and scalable server-side applications.</p>
-    <p align="center">
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/v/@nestjs/core.svg" alt="NPM Version" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/l/@nestjs/core.svg" alt="Package License" /></a>
-<a href="https://www.npmjs.com/~nestjscore" target="_blank"><img src="https://img.shields.io/npm/dm/@nestjs/common.svg" alt="NPM Downloads" /></a>
-<a href="https://circleci.com/gh/nestjs/nest" target="_blank"><img src="https://img.shields.io/circleci/build/github/nestjs/nest/master" alt="CircleCI" /></a>
-<a href="https://coveralls.io/github/nestjs/nest?branch=master" target="_blank"><img src="https://coveralls.io/repos/github/nestjs/nest/badge.svg?branch=master#9" alt="Coverage" /></a>
-<a href="https://discord.gg/G7Qnnhy" target="_blank"><img src="https://img.shields.io/badge/discord-online-brightgreen.svg" alt="Discord"/></a>
-<a href="https://opencollective.com/nest#backer" target="_blank"><img src="https://opencollective.com/nest/backers/badge.svg" alt="Backers on Open Collective" /></a>
-<a href="https://opencollective.com/nest#sponsor" target="_blank"><img src="https://opencollective.com/nest/sponsors/badge.svg" alt="Sponsors on Open Collective" /></a>
-  <a href="https://paypal.me/kamilmysliwiec" target="_blank"><img src="https://img.shields.io/badge/Donate-PayPal-ff3f59.svg" alt="Donate us"/></a>
-    <a href="https://opencollective.com/nest#sponsor"  target="_blank"><img src="https://img.shields.io/badge/Support%20us-Open%20Collective-41B883.svg" alt="Support us"></a>
-  <a href="https://twitter.com/nestframework" target="_blank"><img src="https://img.shields.io/twitter/follow/nestframework.svg?style=social&label=Follow" alt="Follow us on Twitter"></a>
-</p>
-  <!--[![Backers on Open Collective](https://opencollective.com/nest/backers/badge.svg)](https://opencollective.com/nest#backer)
-  [![Sponsors on Open Collective](https://opencollective.com/nest/sponsors/badge.svg)](https://opencollective.com/nest#sponsor)-->
-
 ## Description
-
-[Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
+- Proyecto con nestjs sobre una api de tareas, esta api
+- tiene auntenticacion de api_key y jwt
+- se necesita enviar un api_key valido para poder usar todas las rutas
+- asi como tener una session valida para usar las api de task y user
 
 ## Project setup
 
@@ -56,36 +34,68 @@ $ npm run start:dev
 $ npm run start:prod
 ```
 
-## Run tests
+## Ejemplos de uso de cada endpoint
+http://localhost:3000/api/
+## Estructura del proyecto
+- La estructura del proyecto es modular
 
-```bash
-# unit tests
-$ npm run test
-
-# e2e tests
-$ npm run test:e2e
-
-# test coverage
-$ npm run test:cov
-```
-
-## Deployment
-
-When you're ready to deploy your NestJS application to production, there are some key steps you can take to ensure it runs as efficiently as possible. Check out the [deployment documentation](https://docs.nestjs.com/deployment) for more information.
-
-If you are looking for a cloud-based platform to deploy your NestJS application, check out [Mau](https://mau.nestjs.com), our official platform for deploying NestJS applications on AWS. Mau makes deployment straightforward and fast, requiring just a few simple steps:
-
-```bash
-$ npm install -g mau
-$ mau deploy
-```
-
-With Mau, you can deploy your application in just a few clicks, allowing you to focus on building features rather than managing infrastructure.
+src/
+├── auth/                           # Módulo de autenticación
+│   ├── constants/                  # Constantes para autenticación
+│   │   └── jwtConstants.secrets    # Archivo con claves secretas de JWT
+│   ├── dto/                        # DTOs para login y registro
+│   │   ├── login.dto.ts
+│   │   └── register.dto.ts
+│   ├── guard/                      # Guardias de autenticación y autorización
+│   │   ├── auth.guard.ts
+│   │   └── user.guard.ts
+│   ├── strategy/                   # Estrategias para autenticación
+│   │   └── api-key-strategy.ts     # Estrategia para validación de API Key
+│   ├── auth.controller.ts          # Controlador de autenticación
+│   ├── auth.middleware.ts          # Middleware de autenticación
+│   ├── auth.module.ts              # Módulo de autenticación
+│   └── auth.service.ts             # Servicio de autenticación
+│
+├── database/                       # Módulo de base de datos
+│   └── database.module.ts          # Módulo para la conexión a la base de datos
+│
+├── config/                         # Módulo de configuración
+│   ├── config-loader.ts            # Cargador de configuración
+│   ├── config.module.ts            # Módulo de configuración
+│   └── env-schema.ts               # Esquema de validación de variables de entorno
+│
+├── modules/                        # Módulos principales de la aplicación
+│   ├── task/                       # Módulo de tareas
+│   │   ├── dto/                    # DTOs de tareas
+│   │   │   ├── create-task.dto.ts
+│   │   │   └── update-task.dto.ts
+│   │   ├── entities/               # Entidades de tareas
+│   │   │   └── task.entity.ts
+│   │   ├── enums/                  # Enumeraciones de estado de tareas
+│   │   │   └── status.enum.ts
+│   │   ├── task.controller.ts      # Controlador de tareas
+│   │   ├── task.module.ts          # Módulo de tareas
+│   │   └── task.service.ts         # Servicio de tareas
+│   │
+│   └── user/                       # Módulo de usuarios
+│       ├── dto/                    # DTOs de usuarios
+│       │   ├── create-user.dto.ts
+│       │   └── update-user.dto.ts
+│       ├── entities/               # Entidades de usuarios
+│       │   └── user.entity.ts
+│       ├── user.controller.ts      # Controlador de usuarios
+│       ├── user.module.ts          # Módulo de usuarios
+│       └── user.service.ts         # Servicio de usuarios
+│
+├── app.controller.ts               # Controlador principal de la aplicación
+├── app.module.ts                   # Módulo principal de la aplicación
+├── app.service.ts                  # Servicio principal de la aplicación
+└── main.ts                         # Punto de entrada de la aplicación
 
 ## Resources
 
 Check out a few resources that may come in handy when working with NestJS:
-
+- [Nest](https://github.com/nestjs/nest) framework TypeScript starter repository.
 - Visit the [NestJS Documentation](https://docs.nestjs.com) to learn more about the framework.
 - For questions and support, please visit our [Discord channel](https://discord.gg/G7Qnnhy).
 - To dive deeper and get more hands-on experience, check out our official video [courses](https://courses.nestjs.com/).
@@ -98,12 +108,6 @@ Check out a few resources that may come in handy when working with NestJS:
 ## Support
 
 Nest is an MIT-licensed open source project. It can grow thanks to the sponsors and support by the amazing backers. If you'd like to join them, please [read more here](https://docs.nestjs.com/support).
-
-## Stay in touch
-
-- Author - [Kamil Myśliwiec](https://twitter.com/kammysliwiec)
-- Website - [https://nestjs.com](https://nestjs.com/)
-- Twitter - [@nestframework](https://twitter.com/nestframework)
 
 ## License
 

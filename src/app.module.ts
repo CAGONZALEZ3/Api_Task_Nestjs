@@ -13,7 +13,8 @@ import { AuthGuard } from './auth/guard/auth.guard';
 
 @Module({
   imports: [ConfigModule.forRoot({
-    isGlobal: true
+    isGlobal: true,
+    envFilePath: '.env',
   }),
   UserModule, TaskModule, DatabaseModule,
   AuthModule],

@@ -23,7 +23,7 @@ export class TaskService {
       this.compareUsers(userId,createTaskDto.userId)
       const user = await this.userRepository.findOne({where :{id :createTaskDto.userId}});
       if (!user) {
-        throw new NotFoundException('No existe ese usuario');
+        throw new NotFoundException('That user does not exist');
       }
       const task = this.taskRepository.create(createTaskDto);
       return  this.taskRepository.save(task);
@@ -40,7 +40,7 @@ export class TaskService {
   async findOne(id: number,userId : number) {
     const task = await this.taskRepository.findOneBy({id});
     if (!task) {
-      throw new NotFoundException('no existe la tarea con esa id')
+      throw new NotFoundException('The task with that id does not exist')
     }
     this.compareUsers(userId, task.userId);
 
@@ -50,7 +50,7 @@ export class TaskService {
   async findByUserId(userId: number){
     const task = await this.taskRepository.findBy({userId});
       if (!task) {
-        throw new NotFoundException('No existen tareas para ese usuario');
+        throw new NotFoundException('There are no tasks for that user');
       }
     return task;
   }
@@ -74,7 +74,7 @@ export class TaskService {
     try {
       const existingTask = await this.taskRepository.findOneBy({id});
       if (!existingTask) {
-        throw new NotFoundException('No existe la tarea con esa Id')
+        throw new NotFoundException('The task with that id does not exist')
       }
 
       return this.taskRepository.update(id, {status});
@@ -88,7 +88,7 @@ export class TaskService {
     try {
       const task = await this.taskRepository.findOneBy({id});
       if (!task) {
-        throw new NotFoundException('no existe la tarea con esa id')
+        throw new NotFoundException('The task with that id does not exist')
       }
       this.compareUsers(userId, task.userId);
 
@@ -100,7 +100,7 @@ export class TaskService {
 
   compareUsers(user: number, userId: number) {
     if (user !== userId){
-      throw new UnauthorizedException('El usuario no es el mismo');
+      throw new UnauthorizedException('The user is not the same');
     }
   }
 }
