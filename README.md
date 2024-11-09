@@ -23,6 +23,18 @@ DATABASE_NAME=taskNest
 DATABASE_SYNC=true
 ```
 
+## Inicializacion con docker
+```bash
+docker-compose build
+docker-compose up
+
+#para verificar que la network en la que esta la base de datos
+docker network ls
+
+#con el network que tiene mysql se hace algo asi
+docker run --rm -it --network api_task_nestjs_app_network -p 3000:3000  -e API_KEY=PALABRASECRETAAPIKEY -e JWTSECRET=PALABRASECRETAJWT -e PORT=3000 -e DATABASE_HOST=mysql -e DATABASE_PORT=3306 -e DATABASE_USER=user_tasks -e DATABASE_PASSWORD=root -e DATABASE_NAME=taskNest -e DATABASE_SYNC=true api_task_nestjs
+```
+
 ## Compile and run the project
 
 ```bash
